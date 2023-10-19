@@ -13,7 +13,7 @@ Authorization: "Bearer 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"
 def consult():
     # API 키
     api_key = "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"
-    api_key_cash = "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"
+
 
     data = request.get_json()
     print("리엑트에서 온 값: ", data)
