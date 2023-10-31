@@ -37,6 +37,11 @@ def consult():
     place = spring_data.get('place')
     age = spring_data.get('age')
     sex = spring_data.get('sex')
+    storecnt = spring_data.get('storecnt')
+    income = spring_data.get('income')
+    population = spring_data.get('population')
+    maxday = spring_data.get('maxday')
+    category = spring_data.get('category')
     content = react_data.get('content')
 
 
@@ -81,11 +86,11 @@ def consult():
         ],
         # 연결 설정
         # OpenAI config
-        "temperature": 0.2,          # 생성되는 텍스트의 창의성 제어 (값이 높을수록 창의적)
+        "temperature": 0.2,          # 생성되는 텍스트의 창의성 제어 (값이 (2) 높을수록 창의적)
         "top_p" : 0.0,               # 생성되는 텍스트의 다양성 제어 (값이 높을수록 다양)
         # "best_of" : 1,               # 생성되는 텍스트의 횟수 제어 (1인경우 한번만, 10이면 열번 생성) => best_of가 없다고 함
         "frequency_penalty" : 0.0,   # 생성되는 텍스트의 빈도 제어 (값이 높을수록 더 드문 단어 사용)
-        "presence_penalty": 0.0   # 생성되는 텍스트의 존재감 제어 (값이 높을수록 더 많은 단어 사용)
+        "presence_penalty": 0.9   # 생성되는 텍스트의 존재감 제어 (값이 높을수록 더 많은 단어 사용)
 
 
 
@@ -98,6 +103,20 @@ def consult():
     except Exception as e:
         print("Error occurred: ", e)
     return response.json()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+ # 시선예측 api 모델
+@app.route('/eye', methods=['POST'])
+@cross_origin(origins="http://localhost:3000")
+def eye():
+    data = request.get_json()
+    print(data)
+    print(data.beforeimg)
+
+    return
+
 
 if __name__ == '__main__':
     app.run(debug=True)
