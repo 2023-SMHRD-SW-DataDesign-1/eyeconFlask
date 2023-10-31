@@ -15,7 +15,7 @@ print(global_data)
 @cross_origin(origins="http://localhost:3000")
 def consult():
     # API 키
-    api_key = ""
+    api_key = "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"
 
 
 
@@ -67,30 +67,62 @@ def consult():
                 '''
 
 
+    # data = {
+    #     #"model": "gpt-4",
+    #     "model": "gpt-3.5-turbo",
+    #     "messages": [
+    #         {"role": "system", "content": f'''너는 소매업자에게 도움을 주는 사업 컨설턴트야 너는 소매업자의 업체 주소에 따라서 주요 연령,성별 타겟의 상권분석을 해주는 데 상권분석은 위치:{place}, 성별:{sex}, 연령:{age}로 가장 많이 찾아오는 타겟에 대한 데이터만 말해 내가 부여한 데이터 외의 분석은 하지마 내가 보내준 데이터로 답하기 어려운 문제는 "이 데이터는 정확하지 않을 수 있습니다." 라는 말을 앞에 먼저하고 너 나름대로 답을 해줘 그리고 문장은  최대한 간략하게 항상 답해야 해 '''},
+    #         {"role": "user", "content": "제 가게의 상권을 분석해주세요 "},
+    #         {"role": "assistant", "content": f'''이 상권의 주요타겟은 {age} {sex}입니다.'''},
+    #         {"role": "user", "content": "그럼 그 주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
+    #         {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
+    #         {"role": "user", "content": content  }
+    #
+    #     ],
+    #     # 연결 설정
+    #     # OpenAI config
+    #     "temperature": 0.2,          # 생성되는 텍스트의 창의성 제어 (값이 높을수록 창의적)
+    #     "top_p" : 0.0,               # 생성되는 텍스트의 다양성 제어 (값이 높을수록 다양)
+    #     # "best_of" : 1,               # 생성되는 텍스트의 횟수 제어 (1인경우 한번만, 10이면 열번 생성) => best_of가 없다고 함
+    #     "frequency_penalty" : 0.0,   # 생성되는 텍스트의 빈도 제어 (값이 높을수록 더 드문 단어 사용)
+    #     "presence_penalty": 0.0,   # 생성되는 텍스트의 존재감 제어 (값이 높을수록 더 많은 단어 사용)
+    #     # "n" : 2                   # 답변하는 횟수 제한
+    #
+    #
+    #
+    # }
     data = {
-        #"model": "gpt-4",
+        # "model": "gpt-4",
         "model": "gpt-3.5-turbo",
         "messages": [
-            {"role": "system", "content": f'''너는 소매업자에게 도움을 주는 사업 컨설턴트야 너는 소매업자의 업체 위치에따른 주요 연령,성별 타겟의 상권분석을 해주는 데 상권분석은 위치:{place}, 성별:{sex}, 연령:{age}로 가장 많이 찾아오는 타겟에 대한 데이터만 말해 내가 부여한 데이터 외의 분석은 하지마 내가 보내준 데이터로 답하기 어려운 문제는 이 데이터는 정확하지 않을 수 있습니다 라는 말을 앞에 먼저하고 너 나름대로 답을 해줘 그리고 문장은  최대한 간략하게 항상 답해야 해 '''},
-            {"role": "user", "content": "제 가게의 상권을 분석해주세요 "},
-            {"role": "assistant", "content": f'''이 상권의 주요타겟은 {age} {sex}입니다.'''},
-            {"role": "user", "content": "그럼 그 주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
+            {"role": "system",
+             "content": f'''당신은 소매업자(편의점 점주, 슈퍼마트 점주)에게 도움을 주는 사업 컨설턴트입니다.
+                 가게 위치(주소) : {place}
+                 주요 타겟 성별 : {sex}
+                 주요 타겟 연령 : {age}
+                모든 답변은 1~3개의 문장으로 답변하세요. '''},
+            {"role": "user", "content": "제 가게 주변 상권을 알려주거나 분석해주세요. "},
+            {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다.'''},
+            {"role": "user", "content": "우리 가게의 타겟을 알려주거나 분석해주세요 "},
+            {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다.'''},
+            {"role": "user", "content": "주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
             {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
-            {"role": "user", "content": content  }
+            {"role": "user", "content": content}
 
         ],
         # 연결 설정
         # OpenAI config
-        "temperature": 0.2,          # 생성되는 텍스트의 창의성 제어 (값이 높을수록 창의적)
-        "top_p" : 0.0,               # 생성되는 텍스트의 다양성 제어 (값이 높을수록 다양)
+        "temperature": 0.2,  # 생성되는 텍스트의 창의성 제어 (값이 높을수록 창의적)
+        "top_p": 0.0,  # 생성되는 텍스트의 다양성 제어 (값이 높을수록 다양)
         # "best_of" : 1,               # 생성되는 텍스트의 횟수 제어 (1인경우 한번만, 10이면 열번 생성) => best_of가 없다고 함
-        "frequency_penalty" : 0.0,   # 생성되는 텍스트의 빈도 제어 (값이 높을수록 더 드문 단어 사용)
-        "presence_penalty": 0.0   # 생성되는 텍스트의 존재감 제어 (값이 높을수록 더 많은 단어 사용)
-
-
-
+        "frequency_penalty": 0.0,  # 생성되는 텍스트의 빈도 제어 (값이 높을수록 더 드문 단어 사용)
+        "presence_penalty": 0.0,  # 생성되는 텍스트의 존재감 제어 (값이 높을수록 더 많은 단어 사용)
+        # "n" : 2                   # GPT가 제공하는 답변 경우의 수
+        # "stop"                    # GPT가 답변할때 설정한 단어가 나오면 거기서 대답멈추는 거 같음
 
     }
+
+
     print("user가 들어간 데이터 : ",data)
     try:
         response = requests.post('https://api.openai.com/v1/chat/completions', headers=headers, data=json.dumps(data))
