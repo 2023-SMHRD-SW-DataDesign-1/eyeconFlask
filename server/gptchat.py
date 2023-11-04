@@ -33,9 +33,10 @@ def consult():
     # API 키
     api_key = ""
 
+
+
     data = request.get_json()
     print(data)
-
     if 'id' in data:
         # 스프링부트에서 보낸 데이터 저장
         global_data['spring'] = data
