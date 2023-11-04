@@ -21,7 +21,7 @@ import numpy as np
 
 app = Flask(__name__)
 CORS(app, supports_credentials=False)
-Authorization: "Bearer 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"
+Authorization: "Bearer "
 
 # 전역 변수 선언
 global_data = {}
@@ -30,9 +30,15 @@ print(global_data)
 @app.route('/consult', methods=['POST'])
 @cross_origin(origins="http://localhost:3000")
 def consult():
-    # API 키
-    api_key = ""
+    # 파일 경로
+    file_path = './secret/gptkey.json'
 
+    # 파일 열기
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+
+    # api_key 값 가져오기
+    api_key = data['api_key']
 
 
     data = request.get_json()
