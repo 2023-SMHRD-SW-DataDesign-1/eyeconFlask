@@ -31,7 +31,7 @@ print(global_data)
 @cross_origin(origins="http://localhost:3000")
 def consult():
     # 파일 경로
-    file_path = './secret/gptkey.json'
+    file_path = '../secret/gptkey.json'
 
     # 파일 열기
     with open(file_path, 'r') as f:
