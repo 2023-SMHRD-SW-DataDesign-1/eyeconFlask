@@ -92,7 +92,7 @@ def consult():
                  주변 상권 일 평균 유동인구 : {population},
                  주변 상권 유동인구 최대 요일 : {maxday} 
                 위의 정보들을 참고해서 대답하세요. 정보들이 null인 경우에는 해당 정보를 참고하지 마세요.
-                
+                "사진"에 관한 질문이 들어올 시 사진은 시선 예측 AI로 시선 예측 정보가 담긴 히트맵 이미지를 뜻합니다. 이 정보를 통하여 답변하고, 결과 페이지에서 Planogram 기능을 사용해보라고 추가로 답변을 하세요. 사진에 대한 분석 또는 설명을 할 수 없다는 답변은 하지마세요. 
                 모든 답변은 1~3개의 문장으로 답변하세요. '''},
             # {"role": "user", "content": "제 가게 주변 상권을 알려주거나 분석해주세요. "},
             # {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다. 주변 상권 동종업계 수는 {storecnt}, 평균 매출은 {income}, 일 평균 유동인구는 {population}, 유동인구 최대 요일은 {maxday} 입니다.'''},
@@ -100,8 +100,8 @@ def consult():
             # {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다.'''},
             # {"role": "user", "content": "주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
             # {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
-            {"role": "user", "content": "주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
-            {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
+            # {"role": "user", "content": "저 사진에 대해 설명해줘 "},
+            # {"role": "assistant", "content": f'''사진은 시선 예측 AI가 분석한 결과를 표현한 히트맵 이미지입니다. 이를 통해 고객들이 가장 많이 주목하는 상품 위치를 파악할 수 있습니다. 결과페이지에서 Planogram 기능을 사용해 보세요.'''},
             {"role": "user", "content": content}
 
         ],
@@ -189,14 +189,14 @@ def slice():
         img = cv2.imdecode(img_array, -1)
 
     # yolov5 예측
-    results = model(img, size=640)
+    results = model(img)
 
 
     slice_list = []
     # 검출된 각 객체에 대해 반복합니다.
     for i, (x, y, w, h, conf, _) in enumerate(results.xywh[0]):
 
-        if(conf.item() > 0.7) :
+        if(conf.item() > 0.8) :
             print("conf : ", conf.item())
             # bounding box 좌표를 정수로 변환합니다.
             x1, y1, x2, y2 = int(x - w / 2), int(y - h / 2), int(x + w / 2), int(y + h / 2)
