@@ -20,7 +20,7 @@ import numpy as np
 # from PIL import Image
 
 app = Flask(__name__)
-CORS(app, supports_credentials=False)
+CORS(app, supports_credentials=True)
 Authorization: "Bearer "
 
 # 전역 변수 선언
@@ -31,7 +31,7 @@ print(global_data)
 @cross_origin(origins="http://localhost:3000")
 def consult():
     # 파일 경로
-    file_path = './secret/gptkey.json'
+    file_path = '../secret/gptkey.json'
 
     # 파일 열기
     with open(file_path, 'r') as f:
@@ -92,7 +92,7 @@ def consult():
                  주변 상권 일 평균 유동인구 : {population},
                  주변 상권 유동인구 최대 요일 : {maxday} 
                 위의 정보들을 참고해서 대답하세요. 정보들이 null인 경우에는 해당 정보를 참고하지 마세요.
-                문장 끝마다 줄바꿈을 넣어서 답변하세요.
+                
                 모든 답변은 1~3개의 문장으로 답변하세요. '''},
             # {"role": "user", "content": "제 가게 주변 상권을 알려주거나 분석해주세요. "},
             # {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다. 주변 상권 동종업계 수는 {storecnt}, 평균 매출은 {income}, 일 평균 유동인구는 {population}, 유동인구 최대 요일은 {maxday} 입니다.'''},
@@ -100,6 +100,8 @@ def consult():
             # {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다.'''},
             # {"role": "user", "content": "주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
             # {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
+            {"role": "user", "content": "주요 타겟이 좋아할 만한 품목이 뭐가 있죠?? "},
+            {"role": "assistant", "content": f'''{age} {sex}의 좋아할 만한 품목은 주류와 라면류입니다.'''},
             {"role": "user", "content": content}
 
         ],
@@ -172,7 +174,7 @@ def eye():
     return response_image_base64
 
 @app.route('/slice', methods=['POST'])
-@cross_origin(origins="http://localhost:3000")
+@cross_origin(supports_credentials=True)
 def slice():
     # yolov5 불러오기
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
@@ -192,21 +194,24 @@ def slice():
 
     slice_list = []
     # 검출된 각 객체에 대해 반복합니다.
-    for i, (x, y, w, h, _, _) in enumerate(results.xywh[0]):
-        # bounding box 좌표를 정수로 변환합니다.
-        x1, y1, x2, y2 = int(x - w / 2), int(y - h / 2), int(x + w / 2), int(y + h / 2)
-        print(x1, y1, x2, y2)
-        # bounding box를 기반으로 이미지를 잘라냅니다.
-        crop_img = img[y1:y2, x1:x2]
-        _, encoded_image = cv2.imencode('.jpg', crop_img)
-        image_bytes = encoded_image.tobytes()
+    for i, (x, y, w, h, conf, _) in enumerate(results.xywh[0]):
 
-        # bytes를 base64 인코딩된 문자열로 변환합니다.
-        image_string = base64.b64encode(image_bytes).decode('utf-8')
+        if(conf.item() > 0.7) :
+            print("conf : ", conf.item())
+            # bounding box 좌표를 정수로 변환합니다.
+            x1, y1, x2, y2 = int(x - w / 2), int(y - h / 2), int(x + w / 2), int(y + h / 2)
+            print(x1, y1, x2, y2)
+            # bounding box를 기반으로 이미지를 잘라냅니다.
+            crop_img = img[y1:y2, x1:x2]
+            _, encoded_image = cv2.imencode('.jpg', crop_img)
+            image_bytes = encoded_image.tobytes()
 
-        slice_list.append(image_string)
+            # bytes를 base64 인코딩된 문자열로 변환합니다.
+            image_string = base64.b64encode(image_bytes).decode('utf-8')
 
-    # JSON 배열로 변환하여 반환합니다.
+            slice_list.append(image_string)
+
+    # JSON 배열로 변환하여 반환합니다
     # print(slice_list)
     return jsonify(slice_list)
 
