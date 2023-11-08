@@ -17,7 +17,6 @@ import base64
 import torch
 import pandas as pd
 import numpy as np
-# from PIL import Image
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://3.36.133.196:3000", "https://3.36.133.196:3000", "http://eyecon.site", "https://eyecon.site"]}}, supports_credentials=True)
