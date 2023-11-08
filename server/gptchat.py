@@ -136,15 +136,15 @@ def eye():
     data = request.get_json()
     print("data['beforeimg'] : ", data['beforeimg'])
 
-    # 파이어베이스 앱 초기화
-    if not firebase_admin._apps:
-        cred = credentials.Certificate("../secret/eyecon-9b097-firebase-adminsdk-38k19-ceea89468c.json")
-        firebase_admin.initialize_app(cred, {
-        "storageBucket": "eyecon-9b097.appspot.com"
-        })
-
-    #스토리지 버킷 가져오기
-    bucket = storage.bucket()
+    # # 파이어베이스 앱 초기화
+    # if not firebase_admin._apps:
+    #     cred = credentials.Certificate("../secret/eyecon-9b097-firebase-adminsdk-38k19-ceea89468c.json")
+    #     firebase_admin.initialize_app(cred, {
+    #     "storageBucket": "eyecon-9b097.appspot.com"
+    #     })
+    #
+    # #스토리지 버킷 가져오기
+    # bucket = storage.bucket()
 
     img_path = data['beforeimg']
     print(img_path)
