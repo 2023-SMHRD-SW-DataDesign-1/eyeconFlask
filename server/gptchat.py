@@ -32,7 +32,7 @@ print(global_data)
 def consult():
     # 파일 경로
     file_path = '../secret/gptkey.json'
-
+    print("dd")
     # 파일 열기
     with open(file_path, 'r') as f:
         data = json.load(f)
@@ -174,7 +174,7 @@ def eye():
     return response_image_base64
 
 @app.route('/slice', methods=['POST'])
-@cross_origin(supports_credentials=True,origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
+@cross_origin(supports_credentials=True,origins=["http://3.36.133.196:3000","https://3.36.133.196:3000", "http://eyecon.site", "https://eyecon.site"])
 def slice():
     # yolov5 불러오기
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
