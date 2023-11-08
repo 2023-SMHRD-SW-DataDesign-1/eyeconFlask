@@ -17,7 +17,6 @@ import base64
 import torch
 import pandas as pd
 import numpy as np
-import ssl
 # from PIL import Image
 
 app = Flask(__name__)
@@ -217,6 +216,4 @@ def slice():
     return jsonify(slice_list)
 
 if __name__ == '__main__':
-    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    ssl_context.load_cert_chain(certfile='cert.pem', keyfile='key.pem')
-    app.run(host="0.0.0.0", port=443, ssl_context=ssl_context)
+    app.run(host='0.0.0.0', debug=True,ssl_context=('cert.pem', 'key.pem'))
