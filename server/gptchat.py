@@ -28,7 +28,7 @@ global_data = {}
 print(global_data)
 
 @app.route('/consult', methods=['POST'])
-@cross_origin(origins="https://3.36.133.196:3000")
+@cross_origin(origins={"http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"})
 def consult():
     # 파일 경로
     file_path = '../secret/gptkey.json'
