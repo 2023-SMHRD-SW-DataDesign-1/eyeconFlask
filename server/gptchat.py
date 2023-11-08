@@ -28,7 +28,7 @@ global_data = {}
 print(global_data)
 
 @app.route('/consult', methods=['POST'])
-@cross_origin(origins={"http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"})
+@cross_origin(origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
 def consult():
     # 파일 경로
     file_path = '../secret/gptkey.json'
@@ -131,7 +131,7 @@ def consult():
 
  # 시선예측 api 모델
 @app.route('/eye', methods=['POST'])
-@cross_origin(origins="https://3.36.133.196:3000")
+@cross_origin(origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
 def eye():
     data = request.get_json()
     print("data['beforeimg'] : ", data['beforeimg'])
@@ -216,4 +216,4 @@ def slice():
     return jsonify(slice_list)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True,ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='0.0.0.0', debug=True)
