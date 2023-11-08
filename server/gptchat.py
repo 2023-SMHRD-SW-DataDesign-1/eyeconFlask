@@ -174,7 +174,7 @@ def eye():
     return response_image_base64
 
 @app.route('/slice', methods=['POST'])
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True,origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
 def slice():
     # yolov5 불러오기
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
