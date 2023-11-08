@@ -201,7 +201,7 @@ def slice():
             # bounding box 좌표를 정수로 변환합니다.
             x1, y1, x2, y2 = int(x - w / 2), int(y - h / 2), int(x + w / 2), int(y + h / 2)
             print(x1, y1, x2, y2)
-            # bounding box를 기반으로 이미지를 잘라냅니다.
+            # bounding box를 기반으로 이미지를 잘라냅니다
             crop_img = img[y1:y2, x1:x2]
             _, encoded_image = cv2.imencode('.jpg', crop_img)
             image_bytes = encoded_image.tobytes()
@@ -216,4 +216,4 @@ def slice():
     return jsonify(slice_list)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='0.0.0.0', debug=True,ssl_context=('cert.pem', 'key.pem'))
