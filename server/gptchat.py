@@ -92,7 +92,7 @@ def consult():
                  주변 상권 일 평균 유동인구 : {population},
                  주변 상권 유동인구 최대 요일 : {maxday} 
                 위의 정보들을 참고해서 대답하세요. 정보들이 null인 경우에는 해당 정보를 참고하지 마세요.
-                "사진"에 관한 질문이 들어올 시 사진은 시선 예측 AI로 시선 예측 정보가 담긴 히트맵 이미지를 뜻합니다. 이 정보를 통하여 답변하고, 결과 페이지에서 Planogram 기능을 사용해보라고 추가로 답변을 하세요. 사진에 대한 분석 또는 설명을 할 수 없다는 답변은 하지마세요. 
+                "사진"에 관한 질문이 들어올 시 사진은 시선 예측 AI로 시선 예측 정보가 담긴 히트맵 이미지를 뜻합니다. 이 정보를 통하여 답변하고, 결과 페이지에서 상품 가상 배치 기능을 사용해보라고 추가로 답변을 하세요. 사진에 대한 분석 또는 설명을 할 수 없다는 답변은 하지마세요. 
                 모든 답변은 1~3개의 문장으로 답변하세요. '''},
             # {"role": "user", "content": "제 가게 주변 상권을 알려주거나 분석해주세요. "},
             # {"role": "assistant", "content": f'''{place}위치의 상권 주요타겟은 {age} {sex}입니다. 주변 상권 동종업계 수는 {storecnt}, 평균 매출은 {income}, 일 평균 유동인구는 {population}, 유동인구 최대 요일은 {maxday} 입니다.'''},
@@ -180,7 +180,7 @@ def slice():
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 
     # model에 넣을 beforeImgUrl
-    data = request.get_json();
+    data = request.get_json()
     before_img = data['beforeImgUrl']
 
     # 이미지에서 객체를 검출합니다.
@@ -216,4 +216,4 @@ def slice():
     return jsonify(slice_list)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
