@@ -20,7 +20,7 @@ import numpy as np
 # from PIL import Image
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://3.36.133.196:3000", "https://3.36.133.196:3000", "http://eyecon.site", "https://eyecon.site"])
+CORS(app, resources={r"/*": {"origins": ["http://3.36.133.196:3000", "https://3.36.133.196:3000", "http://eyecon.site", "https://eyecon.site"]}}, supports_credentials=True)
 Authorization: "Bearer "
 
 # 전역 변수 선언
