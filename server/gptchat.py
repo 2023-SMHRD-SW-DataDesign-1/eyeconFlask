@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://3.36.133.196:3000", "https://3.36.133.196:3000", "http://eyecon.site", "https://eyecon.site"]}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": ["http://43.203.38.24:3000", "https://43.203.38.24:3000", "http://eyecon.site", "https://eyecon.site"]}}, supports_credentials=True)
 Authorization: "Bearer "
 
 # 전역 변수 선언
@@ -27,7 +27,7 @@ global_data = {}
 print(global_data)
 
 @app.route('/consult', methods=['POST'])
-@cross_origin(origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
+@cross_origin(origins=["http://43.203.38.24:3000","https://43.203.38.24:3000","http://eyecon.site", "https://eyecon.site"])
 def consult():
     # 파일 경로
     file_path = '../secret/gptkey.json'
@@ -130,7 +130,7 @@ def consult():
 
  # 시선예측 api 모델
 @app.route('/eye', methods=['POST'])
-@cross_origin(origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
+@cross_origin(origins=["http://43.203.38.24:3000","https://43.203.38.24:3000","http://eyecon.site", "https://eyecon.site"])
 def eye():
     data = request.get_json()
     print("data['beforeimg'] : ", data['beforeimg'])
@@ -173,7 +173,7 @@ def eye():
     return response_image_base64
 
 @app.route('/slice', methods=['POST'])
-@cross_origin(supports_credentials=True,origins=["http://3.36.133.196:3000","https://3.36.133.196:3000","http://eyecon.site", "https://eyecon.site"])
+@cross_origin(supports_credentials=True,origins=["http://43.203.38.24:3000","https://43.203.38.24:3000","http://eyecon.site", "https://eyecon.site"])
 def slice():
     # yolov5 불러오기
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
